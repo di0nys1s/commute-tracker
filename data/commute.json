@@ -1,0 +1,62 @@
+[
+  {
+    "id": "7bf26fe4-f94f-4d7a-bf04-a79a3aa1f3f1",
+    "date": "20-11-2025",
+    "workLocation": "office",
+    "commuteType": "car"
+  },
+  {
+    "id": "3e0a28f5-1804-4dbd-ba8a-5bba9ba0e3f9",
+    "date": "20-11-2025",
+    "workLocation": "office",
+    "commuteType": "car"
+  },
+  {
+    "id": "5f04e8b3-2e33-4f8a-bccb-21c2961808e2",
+    "date": "20-11-2025",
+    "workLocation": "office",
+    "commuteType": "car"
+  },
+  {
+    "id": "53b870e9-841e-488d-87b3-b1fd291f8e7e",
+    "date": "20-11-2025",
+    "workLocation": "office",
+    "commuteType": "car"
+  },
+  {
+    "id": "75ea2bf7-26fc-4de7-80e9-de9064797f7d",
+    "date": "20-11-2025",
+    "workLocation": "office",
+    "commuteType": "car"
+  },
+  {
+    "id": "7d5c4ce5-3b3d-4047-b8cb-88b4f11d9ffe",
+    "date": "20-11-2025",
+    "workLocation": "office",
+    "commuteType": "car"
+  },
+  {
+    "id": "1",
+    "date": "01-11-2025",
+    "workLocation": "office",
+    "commuteType": "car"
+  },
+  {
+    "id": "2",
+    "date": "02-11-2025",
+    "workLocation": "home",
+    "commuteType": "public_transport"
+  },
+  {
+    "id": "3",
+    "date": "03-11-2025",
+    "workLocation": "office",
+    "commuteType": "car"
+  },
+  {
+    "id": "4",
+    "date": "04-11-2025",
+    "workLocation": "home",
+    "commuteType": "public_transport"
+  }
+]
