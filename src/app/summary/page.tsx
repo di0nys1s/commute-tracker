@@ -24,10 +24,13 @@ export default function SummaryPage() {
 
   const rows = useMemo(
     () =>
-      currentMonthDetails.slice().sort(
-        (a, b) =>
-          Number(a.date.split("-")[0] || 0) - Number(b.date.split("-")[0] || 0)
-      ),
+      currentMonthDetails
+        .slice()
+        .sort(
+          (a, b) =>
+            Number(a.date.split("-")[0] || 0) -
+            Number(b.date.split("-")[0] || 0)
+        ),
     [currentMonthDetails]
   );
 
@@ -65,12 +68,22 @@ export default function SummaryPage() {
                 <TableRow key={entry.id}>
                   <TableCell>{entry.date}</TableCell>
                   <TableCell>{getWeekdayShort(entry.date)}</TableCell>
-                  <TableCell>{entry.include ? "Working" : "Not Working"}</TableCell>
                   <TableCell>
-                    {entry.workLocation === "office" ? "Office" : "Home"}
+                    {entry.status === "working" ? "Working" : "Not Working"}
                   </TableCell>
                   <TableCell>
-                    {entry.commuteType === "car" ? "Car" : "Public Transport"}
+                    {!entry.workLocation
+                      ? "-"
+                      : entry.workLocation === "office"
+                      ? "Office"
+                      : "Home"}
+                  </TableCell>
+                  <TableCell>
+                    {!entry.commuteType
+                      ? "-"
+                      : entry.commuteType === "car"
+                      ? "Car"
+                      : "Public Transport"}
                   </TableCell>
                 </TableRow>
               ))}
@@ -90,5 +103,3 @@ export default function SummaryPage() {
     </main>
   );
 }
-
-

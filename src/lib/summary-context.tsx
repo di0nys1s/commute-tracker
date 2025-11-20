@@ -1,18 +1,25 @@
 "use client";
 
 import React, { createContext, useContext, useMemo, useState } from "react";
-import type { CommuteEntry } from "@/app/page";
+
+export type SummaryEntry = {
+  id: string;
+  date: string; // dd-mm-yyyy
+  workLocation: string; // empty string when not provided
+  commuteType?: string; // empty string when not provided
+  status?: "working" | "not_working";
+};
 
 type SummaryContextValue = {
-  currentMonthDetails: CommuteEntry[];
-  setCurrentMonthDetails: (entries: CommuteEntry[]) => void;
+  currentMonthDetails: SummaryEntry[];
+  setCurrentMonthDetails: (entries: SummaryEntry[]) => void;
 };
 
 const SummaryContext = createContext<SummaryContextValue | null>(null);
 
 export function SummaryProvider({ children }: { children: React.ReactNode }) {
   const [currentMonthDetails, setCurrentMonthDetails] = useState<
-    CommuteEntry[]
+    SummaryEntry[]
   >([]);
 
   const value = useMemo(

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useSummary } from "@/lib/summary-context";
+import { useSummary, type SummaryEntry } from "@/lib/summary-context";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -27,9 +27,9 @@ export type CommuteType = "car" | "public_transport";
 export type CommuteEntry = {
   id: string;
   date: string; // dd-mm-yyyy
-  workLocation: WorkLocation;
-  commuteType: CommuteType;
-  include: boolean;
+  workLocation?: WorkLocation;
+  commuteType?: CommuteType;
+  status: "working" | "not_working";
 };
 
 function toDateInputValue(dateDdMmYyyy: string): string {
@@ -171,9 +171,9 @@ export default function HomePage() {
         missing.push({
           id: crypto.randomUUID(),
           date,
-          workLocation: "office",
-          commuteType: "car",
-          include: !isWeekend(date),
+          workLocation: !isWeekend(date) ? "office" : undefined,
+          commuteType: !isWeekend(date) ? "car" : undefined,
+          status: !isWeekend(date) ? "working" : "not_working",
         });
       }
     }
@@ -191,12 +191,21 @@ export default function HomePage() {
         const raw = (json?.data ?? []) as Partial<CommuteEntry>[];
         const normalized: CommuteEntry[] = raw.map((e) => {
           const date = e.date ?? getTodayDdMmYyyy();
+          const computedStatus: "working" | "not_working" =
+            (e.status as "working" | "not_working") ??
+            (!isWeekend(date) ? "working" : "not_working");
           return {
             id: e.id ?? crypto.randomUUID(),
             date,
-            workLocation: (e.workLocation as WorkLocation) ?? "office",
-            commuteType: (e.commuteType as CommuteType) ?? "car",
-            include: e.include ?? !isWeekend(date),
+            workLocation:
+              computedStatus === "working"
+                ? (e.workLocation as WorkLocation) ?? "office"
+                : undefined,
+            commuteType:
+              computedStatus === "working"
+                ? (e.commuteType as CommuteType) ?? "car"
+                : undefined,
+            status: computedStatus,
           };
         });
         setEntries(normalized);
@@ -251,7 +260,14 @@ export default function HomePage() {
                   Number(b.date.split("-")[0] || 0)
               )
           : entries.slice();
-      setCurrentMonthDetails(monthEntries);
+      const normalizedForSummary: SummaryEntry[] = monthEntries.map((e) => ({
+        id: e.id,
+        date: e.date,
+        workLocation: e.workLocation ?? "",
+        commuteType: e.commuteType ?? "",
+        status: e.status,
+      }));
+      setCurrentMonthDetails(normalizedForSummary);
       router.push("/summary");
     } catch (e) {
       setError("Failed to save changes");
@@ -321,15 +337,6 @@ export default function HomePage() {
                     <Input
                       type="date"
                       value={toDateInputValue(entry.date)}
-                      /*
-                      onChange={(e) => {
-                        const newDate = fromDateInputValue(e.target.value);
-                        updateEntry(entry.id, {
-                          date: newDate,
-                          include: !isWeekend(newDate),
-                        });
-                      }}
-                      */
                       readOnly
                       disabled
                     />
@@ -337,9 +344,20 @@ export default function HomePage() {
                   <TableCell>{getWeekdayShort(entry.date)}</TableCell>
                   <TableCell>
                     <Select
-                      value={entry.include ? "working" : "not_working"}
+                      value={entry.status}
                       onValueChange={(value: "working" | "not_working") =>
-                        updateEntry(entry.id, { include: value === "working" })
+                        updateEntry(entry.id, {
+                          status: value,
+                          // When switching to not_working, clear fields; when switching to working, set defaults if missing
+                          workLocation:
+                            value === "not_working"
+                              ? undefined
+                              : entry.workLocation ?? "office",
+                          commuteType:
+                            value === "not_working"
+                              ? undefined
+                              : entry.commuteType ?? "car",
+                        })
                       }
                     >
                       <SelectTrigger>
@@ -352,38 +370,46 @@ export default function HomePage() {
                     </Select>
                   </TableCell>
                   <TableCell>
-                    <Select
-                      value={entry.workLocation}
-                      onValueChange={(value: WorkLocation) =>
-                        updateEntry(entry.id, { workLocation: value })
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="office">Office</SelectItem>
-                        <SelectItem value="home">Home</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    {entry.status === "not_working" ? (
+                      <div>-</div>
+                    ) : (
+                      <Select
+                        value={entry.workLocation ?? ""}
+                        onValueChange={(value: WorkLocation) =>
+                          updateEntry(entry.id, { workLocation: value })
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="office">Office</SelectItem>
+                          <SelectItem value="home">Home</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
                   </TableCell>
                   <TableCell>
-                    <Select
-                      value={entry.commuteType}
-                      onValueChange={(value: CommuteType) =>
-                        updateEntry(entry.id, { commuteType: value })
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="car">Car</SelectItem>
-                        <SelectItem value="public_transport">
-                          Public Transport
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+                    {entry.status === "not_working" ? (
+                      <div>-</div>
+                    ) : (
+                      <Select
+                        value={entry.commuteType ?? ""}
+                        onValueChange={(value: CommuteType) =>
+                          updateEntry(entry.id, { commuteType: value })
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="car">Car</SelectItem>
+                          <SelectItem value="public_transport">
+                            Public Transport
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

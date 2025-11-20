@@ -2,652 +2,466 @@
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0001",
     "date": "01-09-2025",
-    "workLocation": "office",
-    "commuteType": "public_transport",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0002",
     "date": "02-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0003",
     "date": "03-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0005",
     "date": "05-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0006",
     "date": "06-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0008",
     "date": "08-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0009",
     "date": "09-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d000b",
     "date": "11-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d000c",
     "date": "12-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d000e",
     "date": "14-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0010",
     "date": "16-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0012",
     "date": "18-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0015",
     "date": "21-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0016",
     "date": "22-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d0018",
     "date": "24-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d001a",
     "date": "26-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d001b",
     "date": "27-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "9c1d2e3f-4a5b-6c7d-8e9f-0a1b2c3d001e",
     "date": "30-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "1dcde0bb-c2b5-4ea2-8c85-3f227640839a",
     "date": "20-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "5ccee11c-4258-4845-a51f-780973e2e1da",
     "date": "20-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0001",
     "date": "01-10-2025",
-    "workLocation": "home",
-    "commuteType": "public_transport",
-    "include": true
+    "workLocation": "home"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0002",
     "date": "02-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0003",
     "date": "03-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0004",
     "date": "04-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0005",
     "date": "05-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0006",
     "date": "06-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0007",
     "date": "07-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0008",
     "date": "08-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0009",
     "date": "09-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a000a",
     "date": "10-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a000b",
     "date": "11-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a000c",
     "date": "12-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a000d",
     "date": "13-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a000e",
     "date": "14-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a000f",
     "date": "15-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0010",
     "date": "16-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0011",
     "date": "17-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0012",
     "date": "18-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0013",
     "date": "19-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0014",
     "date": "20-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0015",
     "date": "21-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0016",
     "date": "22-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0017",
     "date": "23-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0018",
     "date": "24-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a0019",
     "date": "25-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a001a",
     "date": "26-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a001b",
     "date": "27-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a001c",
     "date": "28-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a001d",
     "date": "29-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a001e",
     "date": "30-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "2ae3f3d1-6ade-4d20-87d2-c360479a001f",
     "date": "31-10-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0001",
     "date": "01-11-2025",
-    "workLocation": "office",
-    "commuteType": "public_transport",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0002",
     "date": "02-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0003",
     "date": "03-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0004",
     "date": "04-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0005",
     "date": "05-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0006",
     "date": "06-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0007",
     "date": "07-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0008",
     "date": "08-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0009",
     "date": "09-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab000a",
     "date": "10-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab000b",
     "date": "11-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab000c",
     "date": "12-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab000d",
     "date": "13-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab000e",
     "date": "14-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab000f",
     "date": "15-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0010",
     "date": "16-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0011",
     "date": "17-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0012",
     "date": "18-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0013",
     "date": "19-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0014",
     "date": "20-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0015",
     "date": "21-11-2025",
-    "workLocation": "office",
-    "commuteType": "public_transport",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0016",
     "date": "22-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0017",
     "date": "23-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0018",
     "date": "24-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab0019",
     "date": "25-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab001a",
     "date": "26-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab001b",
     "date": "27-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab001c",
     "date": "28-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab001d",
     "date": "29-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "3be4f4e2-7bef-4e31-98e3-d47158ab001e",
     "date": "30-11-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "f0ccafec-e545-404a-b228-cbba2a13ee3c",
     "date": "04-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "5dc6dc3f-0159-4d9f-88b1-92277b3be5b2",
     "date": "07-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "d818591d-0f37-4276-8cac-edf060ba1b3e",
     "date": "10-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "05e556c2-bc4e-4c63-a27a-d0eb89313865",
     "date": "13-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "f56d4f53-b294-4a15-bcba-0de43a6687a4",
     "date": "15-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "060e395e-568d-4af7-923f-0f6680005fc6",
     "date": "17-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "fc547a2d-7e1e-4fe7-8967-109d4ee15d32",
     "date": "19-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "b35344d8-d214-429d-8fe3-962d024c4a91",
     "date": "20-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "1a822812-641a-47d6-882c-5c112a056784",
     "date": "23-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "8469da45-1b40-42ca-927b-2e801af55bc3",
     "date": "25-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   },
   {
     "id": "41b9f04f-8ccb-42dd-86c3-4c91b5716227",
     "date": "28-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": false
+    "workLocation": "office"
   },
   {
     "id": "da800d97-8f3e-4454-a53a-b62aec154965",
     "date": "29-09-2025",
-    "workLocation": "office",
-    "commuteType": "car",
-    "include": true
+    "workLocation": "office"
   }
 ]

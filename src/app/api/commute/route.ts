@@ -12,9 +12,9 @@ type CommuteType = "car" | "public_transport";
 export type CommuteEntry = {
   id: string;
   date: string; // dd-mm-yyyy
-  workLocation: WorkLocation;
-  commuteType: CommuteType;
-  include?: boolean;
+  workLocation?: WorkLocation;
+  commuteType?: CommuteType;
+  status?: "working" | "not_working";
 };
 
 async function readData(): Promise<CommuteEntry[]> {
@@ -32,10 +32,7 @@ export async function GET() {
     const data = await readData();
     return NextResponse.json({ data });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to read data" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to read data" }, { status: 500 });
   }
 }
 
@@ -43,10 +40,7 @@ export async function PUT(request: Request) {
   try {
     const body = (await request.json()) as { data: CommuteEntry[] };
     if (!Array.isArray(body?.data)) {
-      return NextResponse.json(
-        { error: "Invalid payload" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
     await writeData(body.data);
     return NextResponse.json({ ok: true });
