@@ -9,6 +9,10 @@
     "lint": "eslint",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "e2e": "playwright test && npx playwright show-report",
+    "e2e:ui": "playwright test --ui",
+    "e2e:headed": "playwright test --headed",
+    "e2e:chrome": "playwright test --project=chromium --headed",
     "playwright:install": "playwright install"
   },
   "dependencies": {
@@ -25,7 +29,7 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0",
+    "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

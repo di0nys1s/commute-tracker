@@ -1,0 +1,46 @@
+{
+  "employeeId": "EMP-2024-001",
+  "records": [
+    {
+      "date": "2024-11-04",
+      "checkIn": "09:15",
+      "checkOut": "18:30"
+    },
+    {
+      "date": "2024-11-08",
+      "checkIn": "08:45",
+      "checkOut": "17:15"
+    },
+    {
+      "date": "2024-11-11",
+      "checkIn": "09:00",
+      "checkOut": "18:00"
+    },
+    {
+      "date": "2024-11-14",
+      "checkIn": "09:30",
+      "checkOut": "18:45"
+    },
+    {
+      "date": "2024-11-18",
+      "checkIn": "08:50",
+      "checkOut": "17:30"
+    },
+    {
+      "date": "2024-11-21",
+      "checkIn": "09:10",
+      "checkOut": "18:20"
+    },
+    {
+      "date": "2024-11-25",
+      "checkIn": "09:05",
+      "checkOut": "18:10"
+    },
+    {
+      "date": "2024-11-29",
+      "checkIn": "08:40",
+      "checkOut": "16:50"
+    }
+  ]
+}
+
