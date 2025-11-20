@@ -14,6 +14,7 @@ export type CommuteEntry = {
   date: string; // dd-mm-yyyy
   workLocation: WorkLocation;
   commuteType: CommuteType;
+  include?: boolean;
 };
 
 async function readData(): Promise<CommuteEntry[]> {

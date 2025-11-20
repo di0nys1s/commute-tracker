@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -27,6 +27,7 @@ export type CommuteEntry = {
   date: string; // dd-mm-yyyy
   workLocation: WorkLocation;
   commuteType: CommuteType;
+  include: boolean;
 };
 
 function toDateInputValue(dateDdMmYyyy: string): string {
@@ -41,6 +42,14 @@ function fromDateInputValue(dateYyyyMmDd: string): string {
   return `${dd}-${mm}-${yyyy}`;
 }
 
+function getWeekdayShort(dateDdMmYyyy: string): string {
+  const [dd, mm, yyyy] = dateDdMmYyyy.split("-");
+  if (!dd || !mm || !yyyy) return "";
+  const d = new Date(Number(yyyy), Number(mm) - 1, Number(dd));
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString(undefined, { weekday: "short" });
+}
+
 function getTodayDdMmYyyy(): string {
   const d = new Date();
   const dd = String(d.getDate()).padStart(2, "0");
@@ -49,17 +58,131 @@ function getTodayDdMmYyyy(): string {
   return `${dd}-${mm}-${yyyy}`;
 }
 
+function isWeekend(dateDdMmYyyy: string): boolean {
+  const [dd, mm, yyyy] = dateDdMmYyyy.split("-");
+  if (!dd || !mm || !yyyy) return false;
+  const d = new Date(Number(yyyy), Number(mm) - 1, Number(dd));
+  const day = d.getDay(); // 0 Sun, 6 Sat
+  return day === 0 || day === 6;
+}
+
+function toMonthKey(dateDdMmYyyy: string): string {
+  const parts = dateDdMmYyyy.split("-");
+  const mm = parts[1];
+  const yyyy = parts[2];
+  if (!mm || !yyyy) return "";
+  return `${mm}-${yyyy}`; // mm-yyyy
+}
+
+function monthKeyToLabel(monthKey: string): string {
+  const [mm, yyyy] = monthKey.split("-");
+  const m = Number(mm) - 1;
+  if (Number.isNaN(m) || !yyyy) return monthKey;
+  const dt = new Date(Number(yyyy), m, 1);
+  return dt.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+}
+
+function daysInMonthFromKey(monthKey: string): number {
+  const [mm, yyyy] = monthKey.split("-");
+  const month = Number(mm);
+  const year = Number(yyyy);
+  if (Number.isNaN(month) || Number.isNaN(year) || month < 1 || month > 12) {
+    return 31;
+  }
+  return new Date(year, month, 0).getDate();
+}
+
+function makeDateFromMonthKeyDay(monthKey: string, day: number): string {
+  const [mm, yyyy] = monthKey.split("-");
+  const dd = String(day).padStart(2, "0");
+  return `${dd}-${mm}-${yyyy}`;
+}
+
 export default function HomePage() {
   const [entries, setEntries] = useState<CommuteEntry[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // Keep original for dirty check
-  const originalRef = useRef<CommuteEntry[]>([]);
+  const [hiddenIds, setHiddenIds] = useState<Set<string>>(new Set());
+  // Dirty-check logic removed per requirements
 
-  const isDirty = useMemo(
-    () => JSON.stringify(entries) !== JSON.stringify(originalRef.current),
-    [entries]
+  const currentMonthKey = useMemo(() => toMonthKey(getTodayDdMmYyyy()), []);
+  const [selectedMonth, setSelectedMonth] = useState<string>(currentMonthKey);
+
+  const monthOptions = useMemo(() => {
+    const keys = new Set<string>();
+    for (const e of entries) {
+      const k = toMonthKey(e.date);
+      if (k) keys.add(k);
+    }
+    return Array.from(keys).sort((a, b) => {
+      const [mmA, yyyyA] = a.split("-");
+      const [mmB, yyyyB] = b.split("-");
+      const yCmp = Number(yyyyA) - Number(yyyyB);
+      if (yCmp !== 0) return yCmp;
+      return Number(mmA) - Number(mmB);
+    });
+  }, [entries]);
+
+  const filteredSortedEntries = useMemo(() => {
+    const base =
+      selectedMonth && selectedMonth.length
+        ? entries.filter((e) => toMonthKey(e.date) === selectedMonth)
+        : entries;
+    const sorted = base
+      .slice()
+      .sort(
+        (a, b) =>
+          Number(a.date.split("-")[0] || 0) - Number(b.date.split("-")[0] || 0)
+      );
+    // Deduplicate by day-of-month to ensure max one row per day
+    const seenDays = new Set<number>();
+    const uniqueByDay: CommuteEntry[] = [];
+    for (const item of sorted) {
+      const dd = Number(item.date.split("-")[0] || 0);
+      if (!seenDays.has(dd)) {
+        seenDays.add(dd);
+        uniqueByDay.push(item);
+      }
+    }
+    const maxRows =
+      selectedMonth && selectedMonth.length
+        ? daysInMonthFromKey(selectedMonth)
+        : uniqueByDay.length;
+    return uniqueByDay.slice(0, maxRows);
+  }, [entries, selectedMonth]);
+
+  const visibleEntries = useMemo(
+    () => filteredSortedEntries.filter((e) => !hiddenIds.has(e.id)),
+    [filteredSortedEntries, hiddenIds]
   );
+
+  // Ensure the selected month always displays all days.
+  useEffect(() => {
+    if (!selectedMonth) return;
+    const totalDays = daysInMonthFromKey(selectedMonth);
+    const monthEntries = entries.filter(
+      (e) => toMonthKey(e.date) === selectedMonth
+    );
+    const presentDays = new Set<number>(
+      monthEntries.map((e) => Number(e.date.split("-")[0] || 0))
+    );
+    const missing: CommuteEntry[] = [];
+    for (let day = 1; day <= totalDays; day++) {
+      if (!presentDays.has(day)) {
+        const date = makeDateFromMonthKeyDay(selectedMonth, day);
+        missing.push({
+          id: crypto.randomUUID(),
+          date,
+          workLocation: "office",
+          commuteType: "car",
+          include: !isWeekend(date),
+        });
+      }
+    }
+    if (missing.length) {
+      setEntries((prev) => [...prev, ...missing]);
+    }
+  }, [selectedMonth, entries]);
 
   useEffect(() => {
     async function load() {
@@ -67,15 +190,39 @@ export default function HomePage() {
         setError(null);
         const res = await fetch("/api/commute", { cache: "no-store" });
         const json = await res.json();
-        const data = (json?.data ?? []) as CommuteEntry[];
-        setEntries(data);
-        originalRef.current = data;
+        const raw = (json?.data ?? []) as Partial<CommuteEntry>[];
+        const normalized: CommuteEntry[] = raw.map((e) => {
+          const date = e.date ?? getTodayDdMmYyyy();
+          return {
+            id: e.id ?? crypto.randomUUID(),
+            date,
+            workLocation: (e.workLocation as WorkLocation) ?? "office",
+            commuteType: (e.commuteType as CommuteType) ?? "car",
+            include: e.include ?? !isWeekend(date),
+          };
+        });
+        setEntries(normalized);
+        setHiddenIds(new Set());
+        // After loading, default to the latest month present in data
+        const monthKeys = Array.from(
+          new Set(normalized.map((e) => toMonthKey(e.date)).filter(Boolean))
+        );
+        if (monthKeys.length) {
+          const latest = monthKeys.sort((a, b) => {
+            const [mmA, yyyyA] = a.split("-");
+            const [mmB, yyyyB] = b.split("-");
+            const yCmp = Number(yyyyA) - Number(yyyyB);
+            if (yCmp !== 0) return yCmp;
+            return Number(mmA) - Number(mmB);
+          })[monthKeys.length - 1];
+          setSelectedMonth(latest);
+        }
       } catch (e) {
         setError("Failed to load data");
       }
     }
     load();
-  }, [originalRef]);
+  }, []);
 
   function updateEntry(id: string, patch: Partial<CommuteEntry>) {
     setEntries((prev) =>
@@ -83,18 +230,14 @@ export default function HomePage() {
     );
   }
 
-  function addRow() {
-    const newEntry: CommuteEntry = {
-      id: crypto.randomUUID(),
-      date: getTodayDdMmYyyy(),
-      workLocation: "office",
-      commuteType: "car",
-    };
-    setEntries((prev) => [newEntry, ...prev]);
-  }
+  // addRow removed per requirements
 
   function removeRow(id: string) {
-    setEntries((prev) => prev.filter((e) => e.id !== id));
+    setHiddenIds((prev) => {
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
   }
 
   async function saveAll() {
@@ -107,7 +250,6 @@ export default function HomePage() {
         body: JSON.stringify({ data: entries }),
       });
       if (!res.ok) throw new Error("Save failed");
-      originalRef.current = entries;
     } catch (e) {
       setError("Failed to save changes");
     } finally {
@@ -128,9 +270,24 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="secondary" onClick={addRow}>
-              Add Row
-            </Button>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-neutral-600">Month</span>
+              <Select
+                value={selectedMonth}
+                onValueChange={(value: string) => setSelectedMonth(value)}
+              >
+                <SelectTrigger className="w-[200px]">
+                  <SelectValue placeholder="Select Month" />
+                </SelectTrigger>
+                <SelectContent>
+                  {monthOptions.map((k) => (
+                    <SelectItem key={k} value={k}>
+                      {monthKeyToLabel(k)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
             <Button onClick={saveAll} disabled={isSaving || !entries.length}>
               {isSaving ? "Saving..." : "Save All"}
             </Button>
@@ -147,25 +304,46 @@ export default function HomePage() {
           <Table>
             <TableHeader>
               <TableRow className="bg-neutral-50/60">
-                <TableHead className="w-[220px]">Date (dd-mm-yyyy)</TableHead>
+                <TableHead className="w-[220px]">Date</TableHead>
+                <TableHead className="w-[120px]">Day</TableHead>
+                <TableHead className="w-[180px]">Status</TableHead>
                 <TableHead className="w-[220px]">Work Location</TableHead>
                 <TableHead className="w-[240px]">Commute Type</TableHead>
                 <TableHead className="w-[120px]">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {entries.map((entry) => (
+              {visibleEntries.map((entry) => (
                 <TableRow key={entry.id}>
                   <TableCell>
                     <Input
                       type="date"
                       value={toDateInputValue(entry.date)}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const newDate = fromDateInputValue(e.target.value);
                         updateEntry(entry.id, {
-                          date: fromDateInputValue(e.target.value),
-                        })
-                      }
+                          date: newDate,
+                          include: !isWeekend(newDate),
+                        });
+                      }}
                     />
+                  </TableCell>
+                  <TableCell>{getWeekdayShort(entry.date)}</TableCell>
+                  <TableCell>
+                    <Select
+                      value={entry.include ? "working" : "not_working"}
+                      onValueChange={(value: "working" | "not_working") =>
+                        updateEntry(entry.id, { include: value === "working" })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="working">Working</SelectItem>
+                        <SelectItem value="not_working">Not Working</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </TableCell>
                   <TableCell>
                     <Select
@@ -212,11 +390,11 @@ export default function HomePage() {
                   </TableCell>
                 </TableRow>
               ))}
-              {!entries.length && (
+              {!visibleEntries.length && (
                 <TableRow>
-                  <TableCell colSpan={4}>
+                  <TableCell colSpan={6}>
                     <div className="py-10 text-center text-sm text-neutral-500">
-                      No entries. Click &quot;Add Row&quot; to create one.
+                      No entries for the selected month.
                     </div>
                   </TableCell>
                 </TableRow>
@@ -225,9 +403,7 @@ export default function HomePage() {
           </Table>
         </div>
 
-        <div className="mt-3 text-xs text-neutral-500">
-          {isDirty ? "You have unsaved changes." : "All changes saved."}
-        </div>
+        {/* Dirty-check footer removed */}
       </div>
     </main>
   );
