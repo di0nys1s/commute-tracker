@@ -10,7 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
 
 function getWeekdayShort(dateDdMmYyyy: string): string {
   const [dd, mm, yyyy] = dateDdMmYyyy.split("-");
@@ -21,6 +22,7 @@ function getWeekdayShort(dateDdMmYyyy: string): string {
 
 export default function SummaryPage() {
   const { currentMonthDetails } = useSummary();
+  const router = useRouter();
 
   const rows = useMemo(
     () =>
@@ -35,9 +37,14 @@ export default function SummaryPage() {
   );
 
   const onSubmit = () => {
-    // eslint-disable-next-line no-console
     console.log("Submitting currentMonthDetails:", rows);
   };
+
+  useEffect(() => {
+    if (!currentMonthDetails.length) {
+      router.replace("/");
+    }
+  }, [currentMonthDetails, router]);
 
   return (
     <main className="min-h-dvh bg-white text-neutral-900">
@@ -49,7 +56,12 @@ export default function SummaryPage() {
               Read-only view of the saved month data.
             </p>
           </div>
-          <Button onClick={onSubmit}>Submit</Button>
+          <div className="flex items-center gap-2">
+            <Button variant="secondary" onClick={() => router.push("/")}>
+              Back
+            </Button>
+            <Button onClick={onSubmit}>Submit</Button>
+          </div>
         </div>
 
         <div className="overflow-hidden rounded-lg border border-neutral-200">

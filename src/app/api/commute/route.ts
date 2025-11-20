@@ -6,9 +6,9 @@ export const dynamic = "force-dynamic";
 
 const dataFilePath = path.join(process.cwd(), "data", "commute.json");
 
-type WorkLocation = "office" | "home";
-type CommuteType = "car" | "public_transport";
-
+// Types for the mock API payload
+export type WorkLocation = "office" | "home";
+export type CommuteType = "car" | "public_transport";
 export type CommuteEntry = {
   id: string;
   date: string; // dd-mm-yyyy
@@ -17,37 +17,12 @@ export type CommuteEntry = {
   status?: "working" | "not_working";
 };
 
-async function readData(): Promise<CommuteEntry[]> {
-  const content = await fs.readFile(dataFilePath, "utf8");
-  return JSON.parse(content);
-}
-
-async function writeData(entries: CommuteEntry[]): Promise<void> {
-  const content = JSON.stringify(entries, null, 2) + "\n";
-  await fs.writeFile(dataFilePath, content, "utf8");
-}
-
 export async function GET() {
   try {
-    const data = await readData();
+    const content = await fs.readFile(dataFilePath, "utf8");
+    const data = JSON.parse(content) as CommuteEntry[];
     return NextResponse.json({ data });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to read data" }, { status: 500 });
-  }
-}
-
-export async function PUT(request: Request) {
-  try {
-    const body = (await request.json()) as { data: CommuteEntry[] };
-    if (!Array.isArray(body?.data)) {
-      return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
-    }
-    await writeData(body.data);
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to write data" },
-      { status: 500 }
-    );
   }
 }

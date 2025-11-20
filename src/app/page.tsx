@@ -242,13 +242,6 @@ export default function HomePage() {
     try {
       setIsSaving(true);
       setError(null);
-      const res = await fetch("/api/commute", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: entries }),
-      });
-      if (!res.ok) throw new Error("Save failed");
-      // Save current month's details to context and navigate to summary
       const monthEntries =
         selectedMonth && selectedMonth.length
           ? entries
@@ -270,7 +263,7 @@ export default function HomePage() {
       setCurrentMonthDetails(normalizedForSummary);
       router.push("/summary");
     } catch (e) {
-      setError("Failed to save changes");
+      setError("Failed to prepare summary");
     } finally {
       setIsSaving(false);
     }
