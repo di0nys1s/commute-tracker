@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SummaryProvider } from "@/lib/summary-context";
 
 export const metadata: Metadata = {
   title: "Commute Tracker",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <SummaryProvider>{children}</SummaryProvider>
+      </body>
     </html>
   );
 }

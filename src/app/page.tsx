@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { useSummary } from "@/lib/summary-context";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -102,8 +104,9 @@ export default function HomePage() {
   const [entries, setEntries] = useState<CommuteEntry[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [hiddenIds, setHiddenIds] = useState<Set<string>>(new Set());
   // Dirty-check logic removed per requirements
+  const router = useRouter();
+  const { setCurrentMonthDetails } = useSummary();
 
   const currentMonthKey = useMemo(() => toMonthKey(getTodayDdMmYyyy()), []);
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonthKey);
@@ -151,11 +154,6 @@ export default function HomePage() {
     return uniqueByDay.slice(0, maxRows);
   }, [entries, selectedMonth]);
 
-  const visibleEntries = useMemo(
-    () => filteredSortedEntries.filter((e) => !hiddenIds.has(e.id)),
-    [filteredSortedEntries, hiddenIds]
-  );
-
   // Ensure the selected month always displays all days.
   useEffect(() => {
     if (!selectedMonth) return;
@@ -202,7 +200,6 @@ export default function HomePage() {
           };
         });
         setEntries(normalized);
-        setHiddenIds(new Set());
         // After loading, default to the latest month present in data
         const monthKeys = Array.from(
           new Set(normalized.map((e) => toMonthKey(e.date)).filter(Boolean))
@@ -232,14 +229,6 @@ export default function HomePage() {
 
   // addRow removed per requirements
 
-  function removeRow(id: string) {
-    setHiddenIds((prev) => {
-      const next = new Set(prev);
-      next.add(id);
-      return next;
-    });
-  }
-
   async function saveAll() {
     try {
       setIsSaving(true);
@@ -250,6 +239,20 @@ export default function HomePage() {
         body: JSON.stringify({ data: entries }),
       });
       if (!res.ok) throw new Error("Save failed");
+      // Save current month's details to context and navigate to summary
+      const monthEntries =
+        selectedMonth && selectedMonth.length
+          ? entries
+              .filter((e) => toMonthKey(e.date) === selectedMonth)
+              .slice()
+              .sort(
+                (a, b) =>
+                  Number(a.date.split("-")[0] || 0) -
+                  Number(b.date.split("-")[0] || 0)
+              )
+          : entries.slice();
+      setCurrentMonthDetails(monthEntries);
+      router.push("/summary");
     } catch (e) {
       setError("Failed to save changes");
     } finally {
@@ -309,16 +312,16 @@ export default function HomePage() {
                 <TableHead className="w-[180px]">Status</TableHead>
                 <TableHead className="w-[220px]">Work Location</TableHead>
                 <TableHead className="w-[240px]">Commute Type</TableHead>
-                <TableHead className="w-[120px]">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {visibleEntries.map((entry) => (
+              {filteredSortedEntries.map((entry) => (
                 <TableRow key={entry.id}>
                   <TableCell>
                     <Input
                       type="date"
                       value={toDateInputValue(entry.date)}
+                      /*
                       onChange={(e) => {
                         const newDate = fromDateInputValue(e.target.value);
                         updateEntry(entry.id, {
@@ -326,6 +329,9 @@ export default function HomePage() {
                           include: !isWeekend(newDate),
                         });
                       }}
+                      */
+                      readOnly
+                      disabled
                     />
                   </TableCell>
                   <TableCell>{getWeekdayShort(entry.date)}</TableCell>
@@ -379,20 +385,11 @@ export default function HomePage() {
                       </SelectContent>
                     </Select>
                   </TableCell>
-                  <TableCell>
-                    <Button
-                      variant="ghost"
-                      className="text-red-600 hover:text-red-700"
-                      onClick={() => removeRow(entry.id)}
-                    >
-                      Remove
-                    </Button>
-                  </TableCell>
                 </TableRow>
               ))}
-              {!visibleEntries.length && (
+              {!filteredSortedEntries.length && (
                 <TableRow>
-                  <TableCell colSpan={6}>
+                  <TableCell colSpan={5}>
                     <div className="py-10 text-center text-sm text-neutral-500">
                       No entries for the selected month.
                     </div>
