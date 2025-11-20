@@ -36,8 +36,32 @@ export default function SummaryPage() {
     [currentMonthDetails]
   );
 
-  const onSubmit = () => {
-    console.log("Submitting currentMonthDetails:", rows);
+  const onSubmit = async () => {
+    try {
+      const res = await fetch("/api/run-playwright", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: rows }),
+      });
+      if (!res.ok) return;
+      const json = (await res.json()) as {
+        ok?: boolean;
+        exitCode?: number;
+        output?: string;
+      };
+      // eslint-disable-next-line no-console
+      console.log(
+        `Playwright finished: ${json?.ok ? "PASSED" : "FAILED"} (exit ${
+          json?.exitCode
+        })`
+      );
+      if (json?.output) {
+        // eslint-disable-next-line no-console
+        console.log("Playwright output (tail):\n", json.output);
+      }
+    } catch {
+      // ignore
+    }
   };
 
   useEffect(() => {
