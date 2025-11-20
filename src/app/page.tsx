@@ -189,13 +189,23 @@ export default function HomePage() {
         const res = await fetch("/api/commute", { cache: "no-store" });
         const json = await res.json();
         const raw = (json?.data ?? []) as Partial<CommuteEntry>[];
+        // Ensure unique ids
+        const seenIds = new Set<string>();
+        const makeId = (candidate?: string): string => {
+          let id = (candidate ?? "").toString().trim();
+          if (!id) id = crypto.randomUUID();
+          while (seenIds.has(id)) id = crypto.randomUUID();
+          seenIds.add(id);
+          return id;
+        };
+        // Remove the above data when there is unique ids
         const normalized: CommuteEntry[] = raw.map((e) => {
           const date = e.date ?? getTodayDdMmYyyy();
           const computedStatus: "working" | "not_working" =
             (e.status as "working" | "not_working") ??
             (!isWeekend(date) ? "working" : "not_working");
           return {
-            id: e.id ?? crypto.randomUUID(),
+            id: makeId(e.id as string | undefined),
             date,
             workLocation:
               computedStatus === "working"
@@ -231,9 +241,13 @@ export default function HomePage() {
   }, []);
 
   function updateEntry(id: string, patch: Partial<CommuteEntry>) {
-    setEntries((prev) =>
-      prev.map((e) => (e.id === id ? { ...e, ...patch } : e))
-    );
+    setEntries((prev) => {
+      const index = prev.findIndex((e) => e.id === id);
+      if (index === -1) return prev;
+      const next = prev.slice();
+      next[index] = { ...prev[index], ...patch };
+      return next;
+    });
   }
 
   // addRow removed per requirements
@@ -367,7 +381,9 @@ export default function HomePage() {
                       <div>-</div>
                     ) : (
                       <Select
-                        value={entry.workLocation ?? ""}
+                        {...(entry.workLocation
+                          ? { value: entry.workLocation }
+                          : {})}
                         onValueChange={(value: WorkLocation) =>
                           updateEntry(entry.id, { workLocation: value })
                         }
@@ -387,7 +403,9 @@ export default function HomePage() {
                       <div>-</div>
                     ) : (
                       <Select
-                        value={entry.commuteType ?? ""}
+                        {...(entry.commuteType
+                          ? { value: entry.commuteType }
+                          : {})}
                         onValueChange={(value: CommuteType) =>
                           updateEntry(entry.id, { commuteType: value })
                         }

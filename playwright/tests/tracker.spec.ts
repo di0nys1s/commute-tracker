@@ -66,4 +66,7 @@ test("Tracker", async ({ page }) => {
     .fill("100.00");
   // await page.locator('iframe[name="Basis"]').contentFrame().locator('frame[name="Details"]').contentFrame().locator('tr:nth-child(40) > td:nth-child(7)').click();
   // await page.locator('iframe[name="Basis"]').contentFrame().locator('frame[name="Details"]').contentFrame().getByRole('link', { name: 'Verder' }).click();
+  if (process.env.KEEP_BROWSER_OPEN === "1") {
+    await page.pause();
+  }
 });
